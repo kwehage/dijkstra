@@ -1,3 +1,6 @@
 # Dijkstra's Algorithm
 
-Simple python code to teach Dijkstra's algorithm
+Python code to teach Dijkstra's algorithm
+
+![example_1](example_1.png)
+![example_2](example_2.png)

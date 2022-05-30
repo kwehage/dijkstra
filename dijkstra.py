@@ -50,11 +50,6 @@ def dijkstra(start, finish, occupancy_grid):
             )
         )
 
-    # this step is for debugging only: print the distance array so we
-    # can visualize the distances
-    np.set_printoptions(precision=2)
-    print(distance)
-
     # get the path by starting at the finish node and working backwards until
     # we get to the start
     path = []
@@ -63,7 +58,7 @@ def dijkstra(start, finish, occupancy_grid):
     # after the search, the path list will be in the reverse order.
     # reverse it so it goes from the start to the finish location
     path.reverse()
-    return path
+    return path, distance
 
 def visit_neighbors(position, visited, distance, occupancy_grid):
     tmp = []
@@ -173,18 +168,24 @@ if __name__ == "__main__":
     width = 12
     occupancy_grid = np.zeros([height, width])
     occupancy_grid[2, 7] = 1
+    occupancy_grid[3, 8] = 1
+    occupancy_grid[2, 8] = 1
     occupancy_grid[3, 7] = 1
     occupancy_grid[2, 9] = 1
     occupancy_grid[1, 2] = 1
-    occupancy_grid[2, 3] = 1
+    occupancy_grid[2, 2] = 1
+    occupancy_grid[2, 2] = 1
+    occupancy_grid[2, 4] = 1
 
     start = (0, 0)
-    finish = (3, width - 2)
+    finish = (5, width - 1)
 
-    print("occupancy grid")
-    print(occupancy_grid)
+    path, distance = dijkstra(start, finish, occupancy_grid)
 
-    path = dijkstra(start, finish, occupancy_grid)
-    print(path)
+    x, y = np.meshgrid(range(width), range(height))
+    plt.pcolor(x, y, occupancy_grid)
+
+    plt.scatter(start[1], start[0], marker='o')
+    plt.scatter(finish[1], finish[0], marker='x')
     plt.plot([p[1] for p in path], [p[0] for p in path])
     plt.show()
